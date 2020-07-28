@@ -1,0 +1,42 @@
+{
+  "name": "vsharp-cli",
+  "version": "1.0.1",
+  "description": "Opinionated CLI for starting Vue.js single page applications",
+  "main": "lib/index.js",
+  "bin": {
+    "vsharp": "bin/vsharp",
+    "vsharp-init": "bin/vsharp-init",
+    "vsharp-list": "bin/vsharp-list"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liaohongdong/vsharp-cli.git"
+  },
+  "keywords": [
+    "vue",
+    "cli",
+    "spa"
+  ],
+  "author": "liaohongdong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/liaohongdong/vsharp-cli/issues"
+  },
+  "homepage": "https://github.com/liaohongdong/vsharp-cli#readme",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "commander": "^2.9.0",
+    "download-github-repo": "^0.1.3",
+    "khaos": "^0.9.3",
+    "read-metadata": "^1.0.0",
+    "request": "^2.67.0",
+    "rimraf": "^2.5.0",
+    "uid": "0.0.2"
+  }
+}

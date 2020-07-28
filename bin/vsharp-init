@@ -1,0 +1,104 @@
+#!/usr/bin/env node
+var Khaos = require('khaos')
+var metadata = require('read-metadata')
+var download = require('download-github-repo')
+var logger = require('../lib/logger')
+var program = require('commander')
+var exists = require('fs').existsSync;
+var join = require('path').join
+var resolve = require('path').resolve
+var rm = require('rimraf').sync
+var uid = require('uid')
+
+program
+    .usage('<template> <project-name>')
+
+program
+    .on('--help', () => {
+        console.log(`    Examples:`)
+        console.log()
+        console.log('    # create a new project with an official template')
+        console.log('    $ vsharp init webpack my-project')
+        console.log()
+        console.log('    # create a new project straight from a github template')
+        console.log('    $ vsharp init username/repo my-project')
+        console.log()
+    })
+
+program
+    .parse(process.argv)
+
+// console.log(program.args, 31, process.argv)
+if (program.args.length < 2) return program.help()
+
+
+process.on('exit', function () {
+    console.log('退出')
+})
+
+var template = program.args[0]
+var name = program.args[1]
+var dir = program.directory
+var to = resolve(name)
+
+
+if (exists(to)) logger.fatal(`"%s" already exists.`, name)
+
+if (!~template.indexOf('/')) {
+    template = 'vsharp-templates/' + template
+}
+
+var tmp = '/tmp/vsharp-template-' + uid()
+download(template, tmp, function (err) {
+    if (err) logger.fatal(err)
+    generate(tmp, to, function (err) {
+        if (err) logger.fatal(err)
+        rm(tmp)
+        logger.sucess(`Generated "%s"`, name)
+    })
+})
+
+function generate(src, dest, fn) {
+    var template = join(src, 'template')
+    var khaos = new Khaos(template)
+    var opts = options(src) // 解析下载下来的文件 json
+    khaos.schema(opts.schema)
+    khaos.read(function (err, files) {
+        if (err) logger.fatal(err)
+        khaos.parse(files, function (err, schema) {
+            if (err) logger.fatal(err)
+            khaos.prompt(schema, function (err, answers) {
+                console.log(answers, 71)
+                if (err) logger.fatal(err)
+                Object.keys(schema).forEach(function (key) {
+                    if (typeof schema[key] === 'object' &&
+                        schema[key].type === 'string' &&
+                        schema[key].default != null &&
+                        answers[key] === '') {
+                        answers[key] = schema[key].default
+                    }
+                })
+                khaos.write(dest, files, answers, fn)
+            })
+        })
+    })
+}
+
+function options(dir) {
+    var file = join(dir, 'meta.json')
+    var opts = exists(file) ? metadata.sync(file) : {}
+    defaultName(opts)
+    return opts
+}
+
+function defaultName(opts) {
+    var schema = opts.schema || (opts.schema = {})
+    if (!schema.name || typeof schema.name !== 'object') {
+        schema.name = {
+            'type': 'string',
+            'default': name
+        }
+    } else {
+        schema.name['default'] = name
+    }
+}

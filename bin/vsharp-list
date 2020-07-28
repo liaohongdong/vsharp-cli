@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+var logger = require('../lib/logger')
+var request = require('request')
+var chalk = require('chalk')
+
+request({
+    url: 'http://www.baidu.com'
+}, function (err, res, body) {
+    console.log(body)
+})
