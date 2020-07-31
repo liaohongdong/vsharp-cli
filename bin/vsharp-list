@@ -4,8 +4,13 @@ var logger = require('../lib/logger')
 var request = require('request')
 var chalk = require('chalk')
 
+console.log()
+process.on('exit', function () {
+    console.log()
+})
+
 request({
-    url: 'http://www.baidu.com'
+    url: 'https://api.github.com/users/vsharp-templates/repos'
 }, function (err, res, body) {
     console.log(body)
 })
