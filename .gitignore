@@ -78,7 +78,7 @@ typings/
 # Next.js build output
 .next
 
-# Nuxt.js build / generate output
+# Nuxt.js build / generate.js output
 .nuxt
 dist
 
@@ -107,3 +107,5 @@ dist
 .idea
 package-lock.json
 yarn.lock
+
+test/e2e/mock-template-build

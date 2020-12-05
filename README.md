@@ -1,5 +1,4 @@
 # vsharp-cli
-# vue-cli
 
 A simple CLI for scaffolding Vue.js projects.
 
@@ -11,7 +10,7 @@ Prerequisites: [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/)
 $ npm install -g vsharp-cli
 ```
 
-### Usage
+### Usaged
 
 ``` bash
 $ vsharp init webpack my-project
@@ -19,8 +18,7 @@ $ cd my-project
 $ npm install
 $ npm run dev
 ```
-
-The above command pulls the template from [vuejs-templates/webpack](https://github.com/vuejs-templates/webpack), prompts for some information, and generates the project at `.my-project/`.
+The above command pulls the template from [vuejs-templates/webpack](https://github.com/vuejs-templates/webpack), prompts for some information, and generates the project at `./my-project/`.
 
 ### Official Templates
 The purpose of official Vue project templates are to provide opinionated, battery-included development tooling setups so that users can get started with actual app code as fast as possible. However, these templates are un-opinionated in terms of how you structure your app code and what libraries you use in addition to Vue.js.
@@ -29,13 +27,15 @@ All official project templates are repos in the [vuejs-templates organization](h
 
 Current available templates include:
 
+- [webpack](https://github.com/vuejs-templates/webpack) - A full-featured Webpack + vue-loader setup with hot reload, linting, testing & css extraction.
+
+- [webpack-simple](https://github.com/vuejs-templates/webpack-simple) - A simple Webpack + vue-loader setup for quick prototyping.
+
 - [browserify](https://github.com/vuejs-templates/browserify) - A full-featured Browserify + vueify setup with hot-reload, linting & unit testing.
 
 - [browserify-simple](https://github.com/vuejs-templates/browserify-simple) - A simple Browserify + vueify setup for quick prototyping.
 
-- [webpack](https://github.com/vuejs-templates/webpack) - A full-featured Webpack + vue-loader setup with hot reload, linting, testing & css extraction.
-
-- [webpack-simple](https://github.com/vuejs-templates/webpack-simple) - A simple Webpack + vue-loader setup for quick prototyping.
+- [simple](https://github.com/vuejs-templates/simple) - The simplest possible Vue setup in a single HTML file
 
 ### Custom Templates
 
@@ -57,7 +57,7 @@ You can also create your own template from scratch:
 
 - All template files will be piped through Handlebars for simple templating - `vue-cli` will automatically infer the prompts based on `{{}}` interpolations found in the files.
 
-- A template repo **may** have a `meta.json` file that provides a schema for the prompts. The schema will be passed to [prompt-for](https://github.com/segmentio/prompt-for#prompt-for) as options. See [example](https://github.com/vuejs-templates/webpack/blob/master/meta.json).
+- A template repo **may** have a `meta.json` file that provides a schema for the prompts. The schema will be passed to [inquirer](https://github.com/SBoudrias/Inquirer.js).. We support `string`, `boolean` and `checkbox` (for multi choice) types.
 
 While developing your template you can test via `vue-cli` with:
 
